@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_diam">120dp</dimen>
+    <dimen name="button_corner_rad">12dp</dimen>
+    <dimen name="button_margin">6dp</dimen>
+</resources>

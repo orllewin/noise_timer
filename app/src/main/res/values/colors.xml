@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colour_15_mins">#555555</color>
+    <color name="colour_30_mins">#505050</color>
+    <color name="colour_45_mins">#454545</color>
+    <color name="colour_60_mins">#404040</color>
+    <color name="colour_90_mins">#353535</color>
+    <color name="colour_120_mins">#303030</color>
+    <color name="colour_180_mins">#252525</color>
+    <color name="colour_240_mins">#202020</color>
 </resources>
