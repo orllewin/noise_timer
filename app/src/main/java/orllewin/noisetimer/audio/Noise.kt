@@ -28,9 +28,10 @@ class Noise {
     private lateinit var walkHandler: Handler
     private lateinit var walkRunnable: Runnable
 
-    private var alive = true
+    var alive = false
 
     fun start(audioOn: Boolean, rate: Int = 11025){
+        alive = true
         audioTrack = AudioTrack.Builder()
             .setAudioAttributes(
                 AudioAttributes.Builder()

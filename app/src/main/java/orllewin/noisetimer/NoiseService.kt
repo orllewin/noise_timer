@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import kotlinx.coroutines.GlobalScope
@@ -40,7 +42,7 @@ class NoiseService: Service() {
         intent?.run{
             val rate = getIntExtra("rate", 11025)
             val sleepTimerSeconds = getIntExtra("sleepTimerSeconds", -1)
-            val ratePercentage = getIntExtra("ratePercentage", -1)
+            val ratePercentage = getIntExtra("ratePercentage", 50)
             when(getIntExtra("action", -1)){
                 START_NOISE_SERVICE -> initialise(rate)
                 PAUSE_NOISE_SERVICE -> pause()
@@ -55,16 +57,20 @@ class NoiseService: Service() {
     }
 
     private fun setPlaybackRate(ratePercentage: Int){
-        println("setPlaybackrate: playbackRate: $ratePercentage")
-        noise.playbackRate(kotlin.math.max(2000f, 22050f / 100 * (ratePercentage / 10)))
+        val rate = kotlin.math.max(2000f, 22050f / 100 * (ratePercentage))
+        println("setPlaybackrate: ratePercentage: $ratePercentage rate: $rate")
+        noise.playbackRate(rate)
     }
 
     private fun setSleepTimer(sleepTimerSeconds: Int){
         println("setSleepTimer: sleepTimerSeconds: $sleepTimerSeconds")
+        Handler(Looper.getMainLooper()).postDelayed(Runnable {
+            stop()
+        }, (sleepTimerSeconds * 1000).toLong())
     }
 
     private fun pause(){
-        println("NOISE: pause")
+        println("NOISE: mute")
         noise.setNoiseVolume(0.0f)
         notification = notificationBuilder
             .clearActions()
@@ -75,7 +81,7 @@ class NoiseService: Service() {
     }
 
     private fun resume(){
-        println("NOISE: resume")
+        println("NOISE: unmute")
         noise.setNoiseVolume(0.5f)
         notification = notificationBuilder
             .clearActions()
@@ -93,27 +99,30 @@ class NoiseService: Service() {
     }
 
     private fun initialise(rate: Int) {
+
+        if(noise.alive) return
+
         println("NOISE: initialise with rate: $rate")
 
         pauseIntent =
             PendingIntent.getService(this, PAUSE_NOISE_SERVICE, Intent(this, NoiseService::class.java).also { intent ->
                 intent.putExtra("action", PAUSE_NOISE_SERVICE)
-            }, PendingIntent.FLAG_UPDATE_CURRENT)
+            }, PendingIntent.FLAG_IMMUTABLE)
 
         resumeIntent =
             PendingIntent.getService(this, RESUME_NOISE_SERVICE, Intent(this, NoiseService::class.java).also { intent ->
                 intent.putExtra("action", RESUME_NOISE_SERVICE)
-            }, PendingIntent.FLAG_UPDATE_CURRENT)
+            }, PendingIntent.FLAG_IMMUTABLE)
 
         stopIntent =
             PendingIntent.getService(this, STOP_NOISE_SERVICE, Intent(this, NoiseService::class.java).also { intent ->
                 intent.putExtra("action", STOP_NOISE_SERVICE)
-            }, PendingIntent.FLAG_UPDATE_CURRENT)
+            }, PendingIntent.FLAG_IMMUTABLE)
 
 
         val pendingIntent: PendingIntent = Intent(this, NoiseActivity::class.java).run {
             putExtra("rate", rate)//todo - this doesn't work
-            PendingIntent.getActivity(applicationContext, 0, this, 0)
+            PendingIntent.getActivity(applicationContext, 0, this, PendingIntent.FLAG_IMMUTABLE)
         }
 
         notificationBuilder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -124,15 +133,15 @@ class NoiseService: Service() {
             NotificationCompat.Builder(this)
         }
 
-        pauseAction = NotificationCompat.Action.Builder(null, "Pause", pauseIntent).build()
-        resumeAction = NotificationCompat.Action.Builder(null, "Resume", resumeIntent).build()
-        stopAction = NotificationCompat.Action.Builder(null, "Quit", stopIntent).build()
+        pauseAction = NotificationCompat.Action.Builder(null, "Mute", pauseIntent).build()
+        resumeAction = NotificationCompat.Action.Builder(null, "Unmute", resumeIntent).build()
+        stopAction = NotificationCompat.Action.Builder(null, "Cancel", stopIntent).build()
 
         notification = notificationBuilder
-            .setContentTitle("Oppen Noise")
+            .setContentTitle("Noise Timer")
             .setSmallIcon(R.drawable.vector_notification_icon)
             .setContentIntent(pendingIntent)
-            .setTicker("Oppen Noise Notification")
+            .setTicker("Orllewin Noise Notification")
             .addAction(pauseAction)
             .addAction(stopAction)
             .build()

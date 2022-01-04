@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingStart="4dp"
-                android:text="Noise pitch:"
+                android:text="Pitch:"
                 android:textSize="18sp"
                 android:textColor="@color/white" />
 
@@ -72,6 +72,7 @@
                     app:cornerRadius="@dimen/button_corner_rad"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/timer_15_minutes"
                     android:layout_width="@dimen/button_diam"
                     android:layout_height="@dimen/button_diam"
                     android:layout_marginStart="@dimen/button_margin"
@@ -84,6 +85,7 @@
                     app:cornerRadius="@dimen/button_corner_rad"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/timer_30_minutes"
                     android:layout_width="@dimen/button_diam"
                     android:layout_height="@dimen/button_diam"
                     android:layout_marginStart="@dimen/button_margin"
@@ -96,6 +98,7 @@
                     app:cornerRadius="@dimen/button_corner_rad"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/timer_45_minutes"
                     android:layout_width="@dimen/button_diam"
                     android:layout_height="@dimen/button_diam"
                     android:layout_marginStart="@dimen/button_margin"
@@ -108,6 +111,7 @@
                     app:cornerRadius="@dimen/button_corner_rad"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/timer_1_hour"
                     android:layout_width="@dimen/button_diam"
                     android:layout_height="@dimen/button_diam"
                     android:layout_marginStart="@dimen/button_margin"
@@ -120,6 +124,7 @@
                     app:cornerRadius="@dimen/button_corner_rad"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/timer_1_and_a_half_hours"
                     android:layout_width="@dimen/button_diam"
                     android:layout_height="@dimen/button_diam"
                     android:layout_marginStart="@dimen/button_margin"
@@ -132,6 +137,7 @@
                     app:cornerRadius="@dimen/button_corner_rad"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/timer_2_hours"
                     android:layout_width="@dimen/button_diam"
                     android:layout_height="@dimen/button_diam"
                     android:layout_marginStart="@dimen/button_margin"
@@ -144,6 +150,7 @@
                     app:cornerRadius="@dimen/button_corner_rad"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/timer_3_hours"
                     android:layout_width="@dimen/button_diam"
                     android:layout_height="@dimen/button_diam"
                     android:layout_marginStart="@dimen/button_margin"
@@ -156,6 +163,7 @@
                     app:cornerRadius="@dimen/button_corner_rad"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/timer_4_hours"
                     android:layout_width="@dimen/button_diam"
                     android:layout_height="@dimen/button_diam"
                     android:layout_marginStart="@dimen/button_margin"
@@ -168,114 +176,6 @@
                     app:cornerRadius="@dimen/button_corner_rad"/>
 
             </com.google.android.flexbox.FlexboxLayout>
-
-<!--            <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:weightSum="2">-->
-
-<!--                <androidx.cardview.widget.CardView-->
-<!--                    android:id="@+id/card_15_mins"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="@dimen/button_diam"-->
-<!--                    android:layout_weight="1"-->
-<!--                    app:cardUseCompatPadding="true">-->
-
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="@color/colour_15_mins">-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="15 Minutes"-->
-<!--                            android:layout_centerInParent="true"-->
-<!--                            android:textColor="@color/white"/>-->
-
-
-<!--                    </RelativeLayout>-->
-
-
-<!--                </androidx.cardview.widget.CardView>-->
-
-<!--                <androidx.cardview.widget.CardView-->
-<!--                    android:id="@+id/card_30_mins"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="@dimen/button_diam"-->
-<!--                    android:layout_weight="1"-->
-<!--                    app:cardUseCompatPadding="true">-->
-
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="@color/colour_15_mins">-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="30 Minutes"-->
-<!--                            android:layout_centerInParent="true"-->
-<!--                            android:textColor="@color/white"/>-->
-<!--                    </RelativeLayout>-->
-<!--                </androidx.cardview.widget.CardView>-->
-
-<!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
-
-<!--            <androidx.appcompat.widget.LinearLayoutCompat-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:weightSum="2">-->
-
-<!--                <androidx.cardview.widget.CardView-->
-<!--                    android:id="@+id/card_45_mins"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="@dimen/button_diam"-->
-<!--                    android:layout_weight="1"-->
-<!--                    app:cardUseCompatPadding="true">-->
-
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="@color/colour_45_mins">-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="45 Minutes"-->
-<!--                            android:layout_centerInParent="true"-->
-<!--                            android:textColor="@color/white"/>-->
-<!--                    </RelativeLayout>-->
-
-
-<!--                </androidx.cardview.widget.CardView>-->
-
-<!--                <androidx.cardview.widget.CardView-->
-<!--                    android:id="@+id/card_60_mins"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="@dimen/button_diam"-->
-<!--                    android:layout_weight="1"-->
-<!--                    app:cardUseCompatPadding="true">-->
-
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="@color/colour_60_mins">-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="1 Hour"-->
-<!--                            android:layout_centerInParent="true"-->
-<!--                            android:textColor="@color/white"/>-->
-
-<!--                    </RelativeLayout>-->
-<!--                </androidx.cardview.widget.CardView>-->
-
-<!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
-
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </ScrollView>
