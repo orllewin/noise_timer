@@ -108,7 +108,7 @@ class Noise {
         audioTrack?.playbackRate = playbackRate.toInt()
     }
 
-    fun playbackRate(): Int = audioTrack?.playbackRate ?: 1
+    fun playbackRate(): Int = audioTrack?.playbackRate ?: 11025
 
     private fun initialisePerlinWalk(userRate: Int){
         var xWalk = Random.nextFloat()
@@ -116,7 +116,7 @@ class Noise {
         walkHandler = Handler(Looper.getMainLooper())
 
         walkRunnable = Runnable{
-            audioTrack?.playbackRate?.let {rate ->
+            audioTrack?.playbackRate?.let { rate ->
                 xWalk +=0.1f
                 //Limit range to min/max based on user set rate
                 var nextRate = rate + (Perlin.noise(xWalk, yWalk) * 250).toInt()

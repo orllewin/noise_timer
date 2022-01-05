@@ -14,6 +14,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import orllewin.noisetimer.audio.Noise
+import java.text.SimpleDateFormat
+import java.util.*
 
 const val START_NOISE_SERVICE = 111
 const val PAUSE_NOISE_SERVICE = 112
@@ -26,6 +28,9 @@ class NoiseService: Service() {
 
     private var generateJob: Job? = null
     private val noise = Noise()
+    private lateinit var timerHandler: Handler
+    private lateinit var timerRunable: Runnable
+    private var timerEndTimestamp = -1L
 
     private lateinit var notification: Notification
     private lateinit var notificationBuilder: NotificationCompat.Builder
@@ -36,6 +41,8 @@ class NoiseService: Service() {
     private lateinit var  pauseIntent: PendingIntent
     private lateinit var  resumeIntent: PendingIntent
     private lateinit var  stopIntent: PendingIntent
+
+
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
@@ -64,9 +71,17 @@ class NoiseService: Service() {
 
     private fun setSleepTimer(sleepTimerSeconds: Int){
         println("setSleepTimer: sleepTimerSeconds: $sleepTimerSeconds")
-        Handler(Looper.getMainLooper()).postDelayed(Runnable {
+        timerEndTimestamp = System.currentTimeMillis() + (sleepTimerSeconds * 1000)
+
+        timerHandler = Handler(Looper.getMainLooper())
+
+        timerRunable = Runnable{
             stop()
-        }, (sleepTimerSeconds * 1000).toLong())
+        }
+
+        timerHandler.postDelayed(timerRunable, (sleepTimerSeconds * 1000).toLong())
+
+        initialise(noise.playbackRate())
     }
 
     private fun pause(){
@@ -93,6 +108,7 @@ class NoiseService: Service() {
 
     private fun stop(){
         println("NOISE: stop")
+        timerHandler.removeCallbacks(timerRunable)
         noise.stop()
         generateJob?.cancel()
         stopSelf()
@@ -100,24 +116,38 @@ class NoiseService: Service() {
 
     private fun initialise(rate: Int) {
 
-        if(noise.alive) return
 
         println("NOISE: initialise with rate: $rate")
 
         pauseIntent =
-            PendingIntent.getService(this, PAUSE_NOISE_SERVICE, Intent(this, NoiseService::class.java).also { intent ->
-                intent.putExtra("action", PAUSE_NOISE_SERVICE)
-            }, PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getService(
+                this,
+                PAUSE_NOISE_SERVICE,
+                Intent(this, NoiseService::class.java).also { intent ->
+                    intent.putExtra("action", PAUSE_NOISE_SERVICE)
+                },
+                PendingIntent.FLAG_IMMUTABLE
+            )
 
         resumeIntent =
-            PendingIntent.getService(this, RESUME_NOISE_SERVICE, Intent(this, NoiseService::class.java).also { intent ->
-                intent.putExtra("action", RESUME_NOISE_SERVICE)
-            }, PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getService(
+                this,
+                RESUME_NOISE_SERVICE,
+                Intent(this, NoiseService::class.java).also { intent ->
+                    intent.putExtra("action", RESUME_NOISE_SERVICE)
+                },
+                PendingIntent.FLAG_IMMUTABLE
+            )
 
         stopIntent =
-            PendingIntent.getService(this, STOP_NOISE_SERVICE, Intent(this, NoiseService::class.java).also { intent ->
-                intent.putExtra("action", STOP_NOISE_SERVICE)
-            }, PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getService(
+                this,
+                STOP_NOISE_SERVICE,
+                Intent(this, NoiseService::class.java).also { intent ->
+                    intent.putExtra("action", STOP_NOISE_SERVICE)
+                },
+                PendingIntent.FLAG_IMMUTABLE
+            )
 
 
         val pendingIntent: PendingIntent = Intent(this, NoiseActivity::class.java).run {
@@ -137,8 +167,15 @@ class NoiseService: Service() {
         resumeAction = NotificationCompat.Action.Builder(null, "Unmute", resumeIntent).build()
         stopAction = NotificationCompat.Action.Builder(null, "Cancel", stopIntent).build()
 
+        val message = if (timerEndTimestamp < 0){
+            "Timer not set"
+        }else{
+            generateMessage(timerEndTimestamp)
+        }
+
         notification = notificationBuilder
             .setContentTitle("Noise Timer")
+            .setContentText(message)
             .setSmallIcon(R.drawable.vector_notification_icon)
             .setContentIntent(pendingIntent)
             .setTicker("Orllewin Noise Notification")
@@ -148,9 +185,17 @@ class NoiseService: Service() {
 
         startForeground(1, notification)
 
+        if(noise.alive) return
+
         generateJob = GlobalScope.launch {
             noise.start(true, rate)
         }
+    }
+
+    private fun generateMessage(timerEndTimestamp: Long): String {
+        val date = Date(timerEndTimestamp)
+        val formatter = SimpleDateFormat("HH:mm:ss")
+        return "Playing noise until ${formatter.format(date)}"
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -167,7 +212,7 @@ class NoiseService: Service() {
     private fun createNotificationChannel(channelId: String, channelName: String): String{
         val chan = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW)
         chan.lightColor = Color.BLUE
-        chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+        chan.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         service.createNotificationChannel(chan)
         return channelId
