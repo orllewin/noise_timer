@@ -58,7 +58,7 @@ class Noise {
 
         audioTrack?.play()
 
-        initialisePerlinWalk()
+        initialisePerlinWalk(rate)
 
         var audioBuffer: ShortArray
         var frame: Float
@@ -110,7 +110,7 @@ class Noise {
 
     fun playbackRate(): Int = audioTrack?.playbackRate ?: 1
 
-    private fun initialisePerlinWalk(){
+    private fun initialisePerlinWalk(userRate: Int){
         var xWalk = Random.nextFloat()
         val yWalk = Random.nextFloat()
         walkHandler = Handler(Looper.getMainLooper())
@@ -118,10 +118,10 @@ class Noise {
         walkRunnable = Runnable{
             audioTrack?.playbackRate?.let {rate ->
                 xWalk +=0.1f
-                //Limit range to min/max offered by slider ui
+                //Limit range to min/max based on user set rate
                 var nextRate = rate + (Perlin.noise(xWalk, yWalk) * 250).toInt()
-                nextRate = max(2000, nextRate)
-                nextRate = min(22050, nextRate)
+                nextRate = max(userRate - 5000, nextRate)
+                nextRate = min(userRate + 5000, nextRate)
 
                 audioTrack?.playbackRate = nextRate
                 walkHandler.postDelayed(walkRunnable, 250)
