@@ -22,22 +22,50 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingStart="4dp"
-                android:text="Pitch:"
+                android:text="Frequency:"
                 android:textSize="18sp"
                 android:textColor="@color/white" />
 
-            <com.google.android.material.slider.Slider
-                android:id="@+id/rate_slider"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                app:trackColor="@color/colour_15_mins"
-                app:thumbColor="@color/white"
-                app:thumbRadius="14dp"
-                android:valueFrom="0"
-                android:valueTo="100"
-                android:value="50"/>
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/low_pitch_image"
+                    android:layout_width="@dimen/sine_width"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/vector_low_pitch" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/rate_slider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/low_pitch_image"
+                    android:layout_toStartOf="@+id/high_pitch_image"
+                    android:layout_centerVertical="true"
+                    app:trackColor="@color/colour_15_mins"
+                    app:thumbColor="@color/white"
+                    app:thumbRadius="14dp"
+                    android:valueFrom="0"
+                    android:valueTo="100"
+                    android:value="50"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/high_pitch_image"
+                    android:layout_width="@dimen/sine_width"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/vector_high_pitch" />
+
+
+            </RelativeLayout>
+
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"

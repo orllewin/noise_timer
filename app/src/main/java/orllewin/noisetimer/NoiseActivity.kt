@@ -8,10 +8,16 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.button.MaterialButton
 import orllewin.noisetimer.databinding.ActivityNoiseBinding
+import android.app.ActivityManager
+import android.content.ComponentName
+import android.content.Context
+
 
 class NoiseActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityNoiseBinding
+
+    var serviceComponentName: ComponentName? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +35,7 @@ class NoiseActivity : AppCompatActivity() {
         setupButton(binding.timer3Hours, 180 * 60)
         setupButton(binding.timer4Hours, 240 * 60)
 
-        binding.rateSlider.addOnChangeListener { slider, value, fromUser ->
+        binding.rateSlider.addOnChangeListener { _, value, _ ->
             startService(Intent(this, NoiseService::class.java).also {
                 it.putExtra("action", CHANGE_RATE)
                 it.putExtra("ratePercentage", value.toInt())
@@ -69,10 +75,22 @@ class NoiseActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        startService(Intent(this, NoiseService::class.java).also {
-            it.putExtra("action", START_NOISE_SERVICE)
-            it.putExtra("rate", 11025)
-        })
+        if(serviceComponentName == null) {
+            serviceComponentName = startService(Intent(this, NoiseService::class.java).also {
+                it.putExtra("action", START_NOISE_SERVICE)
+                it.putExtra("rate", 11025)
+            })
+        }
+    }
+
+    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+            if (serviceClass.name == service.service.className) {
+                return true
+            }
+        }
+        return false
     }
 
     override fun onBackPressed() {

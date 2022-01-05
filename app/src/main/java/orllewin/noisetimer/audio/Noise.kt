@@ -58,7 +58,8 @@ class Noise {
 
         audioTrack?.play()
 
-        initialisePerlinWalk(rate)
+
+        //initialisePerlinWalk(rate)
 
         var audioBuffer: ShortArray
         var frame: Float
@@ -110,6 +111,7 @@ class Noise {
 
     fun playbackRate(): Int = audioTrack?.playbackRate ?: 11025
 
+    //too - this is buggy and adds glitches
     private fun initialisePerlinWalk(userRate: Int){
         var xWalk = Random.nextFloat()
         val yWalk = Random.nextFloat()
