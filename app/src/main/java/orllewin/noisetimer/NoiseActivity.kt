@@ -25,8 +25,8 @@ class NoiseActivity : AppCompatActivity() {
         binding = ActivityNoiseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupButton(binding.timer5Minutes, 15)
-        //setupButton(binding.timer5Minutes, 5 * 60)
+        //setupButton(binding.timer5Minutes, 15)
+        setupButton(binding.timer5Minutes, 5 * 60)
         setupButton(binding.timer10Minutes, 10 * 60)
         setupButton(binding.timer20Minutes, 20 * 60)
         setupButton(binding.timer30Minutes, 30 * 60)
