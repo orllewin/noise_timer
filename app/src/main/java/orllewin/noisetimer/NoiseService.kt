@@ -169,7 +169,7 @@ class NoiseService: Service() {
         }
 
         notificationBuilder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = createNotificationChannel("noise_service", "Noise ZZZZzzzz....")
+            val channelId = createNotificationChannel("noise_service", "Noise Timer Channel")
             NotificationCompat.Builder(this, channelId)
         } else {
             @Suppress("DEPRECATION")
@@ -227,7 +227,7 @@ class NoiseService: Service() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(channelId: String, channelName: String): String{
         val chan = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW)
-        chan.lightColor = Color.BLUE
+        chan.lightColor = Color.parseColor("#7251A8")
         chan.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         service.createNotificationChannel(chan)
