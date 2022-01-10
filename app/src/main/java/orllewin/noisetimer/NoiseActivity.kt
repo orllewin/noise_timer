@@ -25,15 +25,16 @@ class NoiseActivity : AppCompatActivity() {
         binding = ActivityNoiseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupButton(binding.timer30Seconds, 30)
-        setupButton(binding.timer15Minutes, 15 * 60)
+        setupButton(binding.timer5Minutes, 15)
+        //setupButton(binding.timer5Minutes, 5 * 60)
+        setupButton(binding.timer10Minutes, 10 * 60)
+        setupButton(binding.timer20Minutes, 20 * 60)
         setupButton(binding.timer30Minutes, 30 * 60)
         setupButton(binding.timer45Minutes, 45 * 60)
         setupButton(binding.timer1Hour, 60 * 60)
         setupButton(binding.timer1AndAHalfHours, 90 * 60)
         setupButton(binding.timer2Hours, 120 * 60)
         setupButton(binding.timer3Hours, 180 * 60)
-        setupButton(binding.timer4Hours, 240 * 60)
 
         binding.rateSlider.addOnChangeListener { _, value, _ ->
             startService(Intent(this, NoiseService::class.java).also {

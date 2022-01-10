@@ -25,9 +25,6 @@ class Noise {
     private val lowPassFilter = LowPassFilter(3500f, samplingFrequency, 1f)
     private val iirFilter = SmoothFilter(4f)
 
-    private lateinit var walkHandler: Handler
-    private lateinit var walkRunnable: Runnable
-
     var alive = false
 
     fun start(audioOn: Boolean, rate: Int = 11025){
@@ -50,16 +47,12 @@ class Noise {
             .build()
 
         when {
-            audioOn -> audioTrack?.setVolume(0.5f)
+            audioOn -> audioTrack?.setVolume(volume)
             else -> audioTrack?.setVolume(0.0f)
         }
 
         audioTrack?.playbackRate = rate//hz
-
         audioTrack?.play()
-
-
-        //initialisePerlinWalk(rate)
 
         var audioBuffer: ShortArray
         var frame: Float
@@ -98,7 +91,6 @@ class Noise {
 
     fun stop() {
         alive = false
-        walkHandler.removeCallbacks(walkRunnable)
         audioTrack?.setVolume(0.0f)
         audioTrack?.pause()
         audioTrack?.flush()
@@ -110,26 +102,4 @@ class Noise {
     }
 
     fun playbackRate(): Int = audioTrack?.playbackRate ?: 11025
-
-    //too - this is buggy and adds glitches
-    private fun initialisePerlinWalk(userRate: Int){
-        var xWalk = Random.nextFloat()
-        val yWalk = Random.nextFloat()
-        walkHandler = Handler(Looper.getMainLooper())
-
-        walkRunnable = Runnable{
-            audioTrack?.playbackRate?.let { rate ->
-                xWalk +=0.1f
-                //Limit range to min/max based on user set rate
-                var nextRate = rate + (Perlin.noise(xWalk, yWalk) * 250).toInt()
-                nextRate = max(userRate - 5000, nextRate)
-                nextRate = min(userRate + 5000, nextRate)
-
-                audioTrack?.playbackRate = nextRate
-                walkHandler.postDelayed(walkRunnable, 250)
-            }
-        }
-
-        walkHandler.post(walkRunnable)
-    }
 }

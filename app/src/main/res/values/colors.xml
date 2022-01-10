@@ -7,7 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colour_15_mins">#555555</color>
+    <color name="colour_5_mins">#656565</color>
+    <color name="colour_10_mins">#606060</color>
+    <color name="colour_20_mins">#555555</color>
     <color name="colour_30_mins">#505050</color>
     <color name="colour_45_mins">#454545</color>
     <color name="colour_60_mins">#404040</color>

@@ -1,5 +1,6 @@
 package orllewin.noisetimer
 
+import android.animation.ValueAnimator
 import android.app.*
 import android.content.Context
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import androidx.annotation.RequiresApi
+import androidx.core.animation.doOnEnd
 import androidx.core.app.NotificationCompat
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -76,7 +78,17 @@ class NoiseService: Service() {
         timerHandler = Handler(Looper.getMainLooper())
 
         timerRunable = Runnable{
-            stop()
+            val fadeOutAnimator = ValueAnimator.ofFloat(noise.volume, 0f)
+            fadeOutAnimator.duration = 8000
+            fadeOutAnimator.addUpdateListener {
+                val value = fadeOutAnimator.animatedValue as Float
+                noise.setNoiseVolume(value)
+            }
+            fadeOutAnimator.doOnEnd {
+                stop()
+            }
+            fadeOutAnimator.start()
+
         }
 
         timerHandler.postDelayed(timerRunable, (sleepTimerSeconds * 1000).toLong())
@@ -111,6 +123,7 @@ class NoiseService: Service() {
         timerHandler.removeCallbacks(timerRunable)
         noise.stop()
         generateJob?.cancel()
+        notification
         stopSelf()
     }
 
@@ -183,7 +196,7 @@ class NoiseService: Service() {
             .addAction(stopAction)
             .build()
 
-        startForeground(1, notification)
+        startForeground(1076, notification)
 
         if(noise.alive) return
 
@@ -206,6 +219,9 @@ class NoiseService: Service() {
         super.onDestroy()
         noise.stop()
         generateJob?.cancel()
+
+        val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        service.cancel(1076)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

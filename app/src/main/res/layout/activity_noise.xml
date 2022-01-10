@@ -47,7 +47,7 @@
                     android:layout_toEndOf="@+id/low_pitch_image"
                     android:layout_toStartOf="@+id/high_pitch_image"
                     android:layout_centerVertical="true"
-                    app:trackColor="@color/colour_15_mins"
+                    app:trackColor="@color/colour_20_mins"
                     app:thumbColor="@color/white"
                     app:thumbRadius="14dp"
                     android:valueFrom="0"
@@ -87,28 +87,42 @@
                 app:flexWrap="wrap">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/timer_30_seconds"
+                    android:id="@+id/timer_5_minutes"
                     android:layout_width="@dimen/button_diam"
                     android:layout_height="@dimen/button_diam"
                     android:layout_marginStart="@dimen/button_margin"
                     android:layout_marginEnd="@dimen/button_margin"
-                    android:backgroundTint="@color/colour_15_mins"
+                    android:backgroundTint="@color/colour_5_mins"
                     android:textColor="@color/white"
                     android:textAllCaps="false"
-                    android:text="30 Seconds"
+                    android:text="5 Minutes"
+                    app:layout_flexGrow="10"
+                    app:cornerRadius="@dimen/button_corner_rad"/>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/timer_10_minutes"
+                    android:layout_width="@dimen/button_diam"
+                    android:layout_height="@dimen/button_diam"
+                    android:layout_marginStart="@dimen/button_margin"
+                    android:layout_marginEnd="@dimen/button_margin"
+                    android:backgroundTint="@color/colour_10_mins"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:text="10 Minutes"
                     app:layout_flexGrow="10"
                     app:cornerRadius="@dimen/button_corner_rad"/>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/timer_15_minutes"
+                    android:id="@+id/timer_20_minutes"
                     android:layout_width="@dimen/button_diam"
                     android:layout_height="@dimen/button_diam"
                     android:layout_marginStart="@dimen/button_margin"
                     android:layout_marginEnd="@dimen/button_margin"
-                    android:backgroundTint="@color/colour_15_mins"
+                    android:backgroundTint="@color/colour_20_mins"
                     android:textColor="@color/white"
                     android:textAllCaps="false"
-                    android:text="15 Minutes"
+                    android:text="20 Minutes"
                     app:layout_flexGrow="10"
                     app:cornerRadius="@dimen/button_corner_rad"/>
 
@@ -187,19 +201,6 @@
                     android:textColor="@color/white"
                     android:textAllCaps="false"
                     android:text="3 Hours"
-                    app:layout_flexGrow="10"
-                    app:cornerRadius="@dimen/button_corner_rad"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/timer_4_hours"
-                    android:layout_width="@dimen/button_diam"
-                    android:layout_height="@dimen/button_diam"
-                    android:layout_marginStart="@dimen/button_margin"
-                    android:layout_marginEnd="@dimen/button_margin"
-                    android:backgroundTint="@color/colour_240_mins"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    android:text="4 Hours"
                     app:layout_flexGrow="10"
                     app:cornerRadius="@dimen/button_corner_rad"/>
 
