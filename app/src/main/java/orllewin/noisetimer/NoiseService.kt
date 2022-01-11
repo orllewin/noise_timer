@@ -30,7 +30,7 @@ class NoiseService: Service() {
 
     private var generateJob: Job? = null
     private val noise = Noise()
-    private lateinit var timerHandler: Handler
+    private var timerHandler: Handler? = null
     private lateinit var timerRunable: Runnable
     private var timerEndTimestamp = -1L
 
@@ -91,7 +91,7 @@ class NoiseService: Service() {
 
         }
 
-        timerHandler.postDelayed(timerRunable, (sleepTimerSeconds * 1000).toLong())
+        timerHandler?.postDelayed(timerRunable, (sleepTimerSeconds * 1000).toLong())
 
         initialise(noise.playbackRate())
     }
@@ -120,7 +120,7 @@ class NoiseService: Service() {
 
     private fun stop(){
         println("NOISE: stop")
-        timerHandler.removeCallbacks(timerRunable)
+        timerHandler?.removeCallbacks(timerRunable)
         noise.stop()
         generateJob?.cancel()
         notification

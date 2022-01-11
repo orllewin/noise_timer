@@ -1,213 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:flex="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:flex="http://schemas.android.com/apk/res-auto"
     android:background="#101010"
     tools:context=".NoiseActivity">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/flex_buttons">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <RelativeLayout
+            android:id="@+id/frequency_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/low_pitch_image"
+                android:layout_width="@dimen/sine_width"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/vector_low_pitch" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/rate_slider"
                 android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/high_pitch_image"
+                android:layout_toEndOf="@+id/low_pitch_image"
+                android:value="50"
+                android:valueFrom="0"
+                android:valueTo="100"
+                app:thumbColor="@color/white"
+                app:thumbRadius="14dp"
+                app:trackColor="@color/colour_20_mins" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/high_pitch_image"
+                android:layout_width="@dimen/sine_width"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingStart="4dp"
-                android:text="Frequency:"
-                android:textSize="18sp"
-                android:textColor="@color/white" />
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/vector_high_pitch" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp">
+        </RelativeLayout>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/low_pitch_image"
-                    android:layout_width="@dimen/sine_width"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/vector_low_pitch" />
+    </RelativeLayout>
 
-                <com.google.android.material.slider.Slider
-                    android:id="@+id/rate_slider"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/low_pitch_image"
-                    android:layout_toStartOf="@+id/high_pitch_image"
-                    android:layout_centerVertical="true"
-                    app:trackColor="@color/colour_20_mins"
-                    app:thumbColor="@color/white"
-                    app:thumbRadius="14dp"
-                    android:valueFrom="0"
-                    android:valueTo="100"
-                    android:value="50"/>
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/flex_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/button_margin"
+        android:layout_marginBottom="@dimen/button_margin"
+        app:alignContent="stretch"
+        app:alignItems="stretch"
+        app:flexDirection="row"
+        app:flexWrap="wrap">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/high_pitch_image"
-                    android:layout_width="@dimen/sine_width"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/vector_high_pitch" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/timer_5_minutes"
+            android:layout_width="@dimen/button_diam"
+            android:layout_height="@dimen/button_diam"
+            android:layout_marginStart="@dimen/button_margin"
+            android:layout_marginEnd="@dimen/button_margin"
+            android:backgroundTint="@color/colour_5_mins"
+            android:text="5 Minutes"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/button_corner_rad"
+            app:layout_flexGrow="10" />
 
 
-            </RelativeLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/timer_10_minutes"
+            android:layout_width="@dimen/button_diam"
+            android:layout_height="@dimen/button_diam"
+            android:layout_marginStart="@dimen/button_margin"
+            android:layout_marginEnd="@dimen/button_margin"
+            android:backgroundTint="@color/colour_10_mins"
+            android:text="10 Minutes"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/button_corner_rad"
+            app:layout_flexGrow="10" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/timer_20_minutes"
+            android:layout_width="@dimen/button_diam"
+            android:layout_height="@dimen/button_diam"
+            android:layout_marginStart="@dimen/button_margin"
+            android:layout_marginEnd="@dimen/button_margin"
+            android:backgroundTint="@color/colour_20_mins"
+            android:text="20 Minutes"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/button_corner_rad"
+            app:layout_flexGrow="10" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/timer_30_minutes"
+            android:layout_width="@dimen/button_diam"
+            android:layout_height="@dimen/button_diam"
+            android:layout_marginStart="@dimen/button_margin"
+            android:layout_marginEnd="@dimen/button_margin"
+            android:backgroundTint="@color/colour_30_mins"
+            android:text="30 Minutes"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/button_corner_rad"
+            app:layout_flexGrow="10" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingStart="4dp"
-                android:text="Duration:"
-                android:textSize="18sp"
-                android:textColor="@color/white" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/timer_45_minutes"
+            android:layout_width="@dimen/button_diam"
+            android:layout_height="@dimen/button_diam"
+            android:layout_marginStart="@dimen/button_margin"
+            android:layout_marginEnd="@dimen/button_margin"
+            android:backgroundTint="@color/colour_45_mins"
+            android:text="45 Minutes"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/button_corner_rad"
+            app:layout_flexGrow="10" />
 
-            <com.google.android.flexbox.FlexboxLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/button_margin"
-                android:layout_marginBottom="@dimen/button_margin"
-                app:alignItems="stretch"
-                app:alignContent="stretch"
-                app:flexDirection="row"
-                app:flexWrap="wrap">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/timer_1_hour"
+            android:layout_width="@dimen/button_diam"
+            android:layout_height="@dimen/button_diam"
+            android:layout_marginStart="@dimen/button_margin"
+            android:layout_marginEnd="@dimen/button_margin"
+            android:backgroundTint="@color/colour_60_mins"
+            android:text="1 Hour"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/button_corner_rad"
+            app:layout_flexGrow="10" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/timer_5_minutes"
-                    android:layout_width="@dimen/button_diam"
-                    android:layout_height="@dimen/button_diam"
-                    android:layout_marginStart="@dimen/button_margin"
-                    android:layout_marginEnd="@dimen/button_margin"
-                    android:backgroundTint="@color/colour_5_mins"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    android:text="5 Minutes"
-                    app:layout_flexGrow="10"
-                    app:cornerRadius="@dimen/button_corner_rad"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/timer_1_and_a_half_hours"
+            android:layout_width="@dimen/button_diam"
+            android:layout_height="@dimen/button_diam"
+            android:layout_marginStart="@dimen/button_margin"
+            android:layout_marginEnd="@dimen/button_margin"
+            android:backgroundTint="@color/colour_90_mins"
+            android:text="1.5 Hours"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/button_corner_rad"
+            app:layout_flexGrow="10" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/timer_2_hours"
+            android:layout_width="@dimen/button_diam"
+            android:layout_height="@dimen/button_diam"
+            android:layout_marginStart="@dimen/button_margin"
+            android:layout_marginEnd="@dimen/button_margin"
+            android:backgroundTint="@color/colour_120_mins"
+            android:text="2 Hours"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/button_corner_rad"
+            app:layout_flexGrow="10" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/timer_10_minutes"
-                    android:layout_width="@dimen/button_diam"
-                    android:layout_height="@dimen/button_diam"
-                    android:layout_marginStart="@dimen/button_margin"
-                    android:layout_marginEnd="@dimen/button_margin"
-                    android:backgroundTint="@color/colour_10_mins"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    android:text="10 Minutes"
-                    app:layout_flexGrow="10"
-                    app:cornerRadius="@dimen/button_corner_rad"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/timer_3_hours"
+            android:layout_width="@dimen/button_diam"
+            android:layout_height="@dimen/button_diam"
+            android:layout_marginStart="@dimen/button_margin"
+            android:layout_marginEnd="@dimen/button_margin"
+            android:backgroundTint="@color/colour_180_mins"
+            android:text="3 Hours"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/button_corner_rad"
+            app:layout_flexGrow="10" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/timer_20_minutes"
-                    android:layout_width="@dimen/button_diam"
-                    android:layout_height="@dimen/button_diam"
-                    android:layout_marginStart="@dimen/button_margin"
-                    android:layout_marginEnd="@dimen/button_margin"
-                    android:backgroundTint="@color/colour_20_mins"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    android:text="20 Minutes"
-                    app:layout_flexGrow="10"
-                    app:cornerRadius="@dimen/button_corner_rad"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/timer_30_minutes"
-                    android:layout_width="@dimen/button_diam"
-                    android:layout_height="@dimen/button_diam"
-                    android:layout_marginStart="@dimen/button_margin"
-                    android:layout_marginEnd="@dimen/button_margin"
-                    android:backgroundTint="@color/colour_30_mins"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    android:text="30 Minutes"
-                    app:layout_flexGrow="10"
-                    app:cornerRadius="@dimen/button_corner_rad"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/timer_45_minutes"
-                    android:layout_width="@dimen/button_diam"
-                    android:layout_height="@dimen/button_diam"
-                    android:layout_marginStart="@dimen/button_margin"
-                    android:layout_marginEnd="@dimen/button_margin"
-                    android:backgroundTint="@color/colour_45_mins"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    android:text="45 Minutes"
-                    app:layout_flexGrow="10"
-                    app:cornerRadius="@dimen/button_corner_rad"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/timer_1_hour"
-                    android:layout_width="@dimen/button_diam"
-                    android:layout_height="@dimen/button_diam"
-                    android:layout_marginStart="@dimen/button_margin"
-                    android:layout_marginEnd="@dimen/button_margin"
-                    android:backgroundTint="@color/colour_60_mins"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    android:text="1 Hour"
-                    app:layout_flexGrow="10"
-                    app:cornerRadius="@dimen/button_corner_rad"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/timer_1_and_a_half_hours"
-                    android:layout_width="@dimen/button_diam"
-                    android:layout_height="@dimen/button_diam"
-                    android:layout_marginStart="@dimen/button_margin"
-                    android:layout_marginEnd="@dimen/button_margin"
-                    android:backgroundTint="@color/colour_90_mins"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    android:text="1.5 Hours"
-                    app:layout_flexGrow="10"
-                    app:cornerRadius="@dimen/button_corner_rad"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/timer_2_hours"
-                    android:layout_width="@dimen/button_diam"
-                    android:layout_height="@dimen/button_diam"
-                    android:layout_marginStart="@dimen/button_margin"
-                    android:layout_marginEnd="@dimen/button_margin"
-                    android:backgroundTint="@color/colour_120_mins"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    android:text="2 Hours"
-                    app:layout_flexGrow="10"
-                    app:cornerRadius="@dimen/button_corner_rad"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/timer_3_hours"
-                    android:layout_width="@dimen/button_diam"
-                    android:layout_height="@dimen/button_diam"
-                    android:layout_marginStart="@dimen/button_margin"
-                    android:layout_marginEnd="@dimen/button_margin"
-                    android:backgroundTint="@color/colour_180_mins"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    android:text="3 Hours"
-                    app:layout_flexGrow="10"
-                    app:cornerRadius="@dimen/button_corner_rad"/>
-
-            </com.google.android.flexbox.FlexboxLayout>
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </ScrollView>
-
-
+    </com.google.android.flexbox.FlexboxLayout>
 </RelativeLayout>

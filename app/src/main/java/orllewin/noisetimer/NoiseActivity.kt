@@ -1,9 +1,9 @@
 package orllewin.noisetimer
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.button.MaterialButton
@@ -11,7 +11,7 @@ import orllewin.noisetimer.databinding.ActivityNoiseBinding
 import android.app.ActivityManager
 import android.content.ComponentName
 import android.content.Context
-
+import com.google.android.material.slider.LabelFormatter
 
 class NoiseActivity : AppCompatActivity() {
 
@@ -19,6 +19,7 @@ class NoiseActivity : AppCompatActivity() {
 
     var serviceComponentName: ComponentName? = null
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,6 +37,8 @@ class NoiseActivity : AppCompatActivity() {
         setupButton(binding.timer2Hours, 120 * 60)
         setupButton(binding.timer3Hours, 180 * 60)
 
+        binding.rateSlider.setLabelFormatter(null)
+        binding.rateSlider.labelBehavior = LabelFormatter.LABEL_GONE
         binding.rateSlider.addOnChangeListener { _, value, _ ->
             startService(Intent(this, NoiseService::class.java).also {
                 it.putExtra("action", CHANGE_RATE)
