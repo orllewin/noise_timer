@@ -101,8 +101,8 @@ class NoiseService: Service() {
         noise.setNoiseVolume(0.0f)
         notification = notificationBuilder
             .clearActions()
-            .addAction(resumeAction)
             .addAction(stopAction)
+            .addAction(resumeAction)
             .build()
         startForeground(1, notification)
     }
@@ -112,8 +112,8 @@ class NoiseService: Service() {
         noise.setNoiseVolume(0.5f)
         notification = notificationBuilder
             .clearActions()
-            .addAction(pauseAction)
             .addAction(stopAction)
+            .addAction(pauseAction)
             .build()
         startForeground(1, notification)
     }
@@ -180,10 +180,9 @@ class NoiseService: Service() {
         resumeAction = NotificationCompat.Action.Builder(null, "Unmute", resumeIntent).build()
         stopAction = NotificationCompat.Action.Builder(null, "Cancel", stopIntent).build()
 
-        val message = if (timerEndTimestamp < 0){
-            "Timer not set"
-        }else{
-            generateMessage(timerEndTimestamp)
+        val message = when {
+            timerEndTimestamp < 0 -> "Timer not set"
+            else -> generateMessage(timerEndTimestamp)
         }
 
         notification = notificationBuilder
@@ -192,8 +191,8 @@ class NoiseService: Service() {
             .setSmallIcon(R.drawable.vector_notification_icon)
             .setContentIntent(pendingIntent)
             .setTicker("Orllewin Noise Notification")
-            .addAction(pauseAction)
             .addAction(stopAction)
+            .addAction(pauseAction)
             .build()
 
         startForeground(1076, notification)
