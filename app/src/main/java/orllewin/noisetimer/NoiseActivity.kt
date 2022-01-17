@@ -4,13 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import com.google.android.material.button.MaterialButton
 import orllewin.noisetimer.databinding.ActivityNoiseBinding
-import android.app.ActivityManager
 import android.content.ComponentName
-import android.content.Context
 import com.google.android.material.slider.LabelFormatter
 
 class NoiseActivity : AppCompatActivity() {
@@ -61,21 +57,6 @@ class NoiseActivity : AppCompatActivity() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_about -> {
-                //
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -85,16 +66,6 @@ class NoiseActivity : AppCompatActivity() {
                 it.putExtra("rate", 11025)
             })
         }
-    }
-
-    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
-        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
-            if (serviceClass.name == service.service.className) {
-                return true
-            }
-        }
-        return false
     }
 
     override fun onBackPressed() {
